@@ -26,6 +26,7 @@ public class GameforceCredit extends Application {
         Scene scene = new Scene(root);
 
         stage.setScene(scene);
+        stage.setTitle("Gameforce Credit System");
         stage.show();
 
 

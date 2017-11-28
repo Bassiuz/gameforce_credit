@@ -19,6 +19,14 @@ public class Customer {
         this.wallets = new ArrayList<>();
         this.wallets.add(new TransactionWallet(walletName));
     }
+    
+    public Customer(String name, String extraMessage) {
+        this.name = name;
+        this.extraMessage = extraMessage;
+        this.wallets = new ArrayList<>();
+        this.wallets.add(new TransactionWallet("Card Credit"));
+        this.wallets.add(new TransactionWallet("Store Credit"));
+    }
 
     public String getName() {
         return name;

@@ -10,56 +10,92 @@
 
 <VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="frontend.GameforceCreditController">
   <children>
-    <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="426.0" prefWidth="640.0" VBox.vgrow="ALWAYS">
-      <children>
-        <Label alignment="CENTER" layoutX="155.0" layoutY="177.0" style="&#10;" text="Drag components from Library here…" textAlignment="CENTER" textFill="#9f9f9f" wrapText="false">
-          <font>
-            <Font size="18.0" />
-          </font>
-        </Label>
-            <ComboBox fx:id="customerList" layoutX="80.0" layoutY="21.0" onAction="#selectCustomer" onInputMethodTextChanged="#selectCustomer" prefWidth="150.0" />
-            <Label layoutX="25.0" layoutY="25.0" text="Naam:" />
-            <ComboBox fx:id="walletList" layoutX="80.0" layoutY="53.0" onAction="#selectWallet" prefWidth="150.0" />
-            <Label layoutX="23.0" layoutY="57.0" text="Wallet:" />
-            <Label layoutX="22.0" layoutY="92.0" text="Walletbalance:" />
-            <Label fx:id="balanceLabel" layoutX="195.0" layoutY="92.0" text="5 euro" />
-            <ListView fx:id="transactionView" layoutX="22.0" layoutY="119.0" prefHeight="250.0" prefWidth="332.0" />
-            <AnchorPane layoutX="257.0" layoutY="17.0" prefHeight="63.0" prefWidth="369.0" style="-fx-background-color: #F2F2F2;">
-               <children>
-                  <Button layoutX="303.0" layoutY="14.0" mnemonicParsing="false" onAction="#addCustomer" text="Voeg toe" />
-                  <TextField fx:id="newCustomerWallet" layoutX="148.0" layoutY="48.0" promptText="Walletnaam" />
-                  <TextField fx:id="newCustomer" layoutX="148.0" layoutY="14.0" promptText="Klantnaam" />
-                  <Label layoutX="8.0" layoutY="18.0" text="Nieuwe klant toevoegen:" />
-               </children>
-               <opaqueInsets>
-                  <Insets />
-               </opaqueInsets>
-            </AnchorPane>
-            <AnchorPane layoutX="364.0" layoutY="119.0" prefHeight="84.0" prefWidth="262.0" style="-fx-background-color: #F2F2F2;">
-               <children>
-                  <Button layoutX="178.0" layoutY="14.0" mnemonicParsing="false" onAction="#addWallet" prefHeight="25.0" prefWidth="77.0" text="Voeg toe" />
-                  <TextField fx:id="newWallet" layoutX="21.0" layoutY="39.0" promptText="Walletnaam" />
-                  <Label layoutX="22.0" layoutY="13.0" prefHeight="27.0" prefWidth="148.0" text="Wallet aan klant toevoegen:" />
-               </children>
-               <opaqueInsets>
-                  <Insets />
-               </opaqueInsets>
-            </AnchorPane>
-            <AnchorPane layoutX="364.0" layoutY="211.0" prefHeight="162.0" prefWidth="262.0" style="-fx-background-color: #F2F2F2;">
-               <children>
-                  <Button layoutX="178.0" layoutY="14.0" mnemonicParsing="false" onAction="#addTransaction" prefHeight="25.0" prefWidth="77.0" text="Voeg toe" />
-                  <TextField fx:id="newTransactionAmount" layoutX="22.0" layoutY="39.0" promptText="Bedrag" />
-                  <Label layoutX="22.0" layoutY="13.0" prefHeight="27.0" prefWidth="148.0" text="Transactie aanmaken" />
-                  <ComboBox fx:id="newTransactionType" layoutX="21.0" layoutY="65.0" prefWidth="150.0" promptText="Transactiesoort" />
-                  <TextArea fx:id="newTransactionComment" layoutX="14.0" layoutY="103.0" prefHeight="45.0" prefWidth="229.0" promptText="Custom Message" />
-               </children>
-               <opaqueInsets>
-                  <Insets />
-               </opaqueInsets>
-            </AnchorPane>
-            <Label fx:id="errorLabel" layoutX="137.0" layoutY="373.0" prefHeight="17.0" prefWidth="489.0" textFill="RED" />
-            <Button layoutX="22.0" layoutY="369.0" mnemonicParsing="false" onAction="#deleteCustomer" text="Delete Customer" />
-      </children>
-    </AnchorPane>
+      <TabPane prefHeight="394.0" prefWidth="620.0" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+          <Tab text="Transacties">
+               <content>
+                  <AnchorPane prefHeight="353.0" prefWidth="605.0">
+                     <children>
+                        <Label layoutX="15.0" layoutY="12.0" text="Naam:" />
+                        <ComboBox fx:id="customerList" layoutX="62.0" layoutY="8.0" onAction="#selectCustomer" onInputMethodTextChanged="#selectCustomer" prefWidth="150.0" />
+                        <Label layoutX="14.0" layoutY="40.0" text="Wallet:" />
+                        <ComboBox fx:id="walletList" layoutX="62.0" layoutY="36.0" onAction="#selectWallet" prefWidth="150.0" />
+                        <AnchorPane layoutX="363.0" layoutY="14.0" prefHeight="341.0" prefWidth="243.0" style="-fx-background-color: #F2F2F2;">
+                           <children>
+                              <TextField fx:id="newTransactionAmount" layoutX="23.0" layoutY="35.0" promptText="Bedrag" />
+                              <Label layoutX="24.0" layoutY="11.0" prefHeight="27.0" prefWidth="148.0" text="Transactie aanmaken" />
+                              <ComboBox fx:id="newTransactionType" layoutX="23.0" layoutY="91.0" prefWidth="150.0" promptText="Transactiesoort" />
+                              <TextArea fx:id="newTransactionComment" layoutX="24.0" layoutY="126.0" prefHeight="204.0" prefWidth="196.0" promptText="Custom Message" />
+                              <Button graphicTextGap="0.0" layoutX="178.0" layoutY="24.0" mnemonicParsing="false" onAction="#addTransaction" prefHeight="41.0" prefWidth="41.0" text="+" textFill="#11ff00">
+                                 <font>
+                                    <Font name="System Bold" size="18.0" />
+                                 </font>
+                              </Button>
+                              <Button graphicTextGap="0.0" layoutX="178.0" layoutY="70.0" mnemonicParsing="false" onAction="#removeTransaction" prefHeight="41.0" prefWidth="41.0" text="-" textFill="RED">
+                                 <font>
+                                    <Font name="System Bold" size="18.0" />
+                                 </font>
+                              </Button>
+                              <ComboBox fx:id="walletList2" layoutX="23.0" layoutY="63.0" onAction="#selectTransactionWallet" prefWidth="150.0" promptText="Wallet" />
+                           </children>
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                        </AnchorPane>
+                        <Accordion layoutX="77.0" layoutY="148.0" />
+                        <TitledPane expanded="false" layoutX="14.0" layoutY="90.0" prefHeight="262.0" prefWidth="334.0" text="Transactiegeschiedenis">
+                           <content>
+                              <ListView fx:id="transactionView" prefHeight="223.0" prefWidth="332.0" />
+                           </content>
+                        </TitledPane>
+                        <Label layoutX="12.0" layoutY="68.0" text="Walletbalance:" />
+                        <Label fx:id="balanceLabel" layoutX="102.0" layoutY="68.0" />
+                        <Label layoutX="217.0" layoutY="12.0" text="Card Credit:" />
+                        <Label layoutX="218.0" layoutY="32.0" text="Store Credit:" />
+                        <Label fx:id="cardCreditLabel" layoutX="289.0" layoutY="12.0" />
+                        <Label fx:id="storeCreditLabel" layoutX="289.0" layoutY="32.0" />
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+          <Tab text="Klanten">
+               <content>
+                  <AnchorPane prefHeight="63.0" prefWidth="369.0" style="-fx-background-color: #F2F2F2;">
+                     <children>
+                        <Button layoutX="303.0" layoutY="14.0" mnemonicParsing="false" onAction="#addCustomer" text="Voeg toe" />
+                        <TextField fx:id="newCustomer" layoutX="148.0" layoutY="14.0" promptText="Klantnaam" />
+                        <Label layoutX="8.0" layoutY="18.0" text="Nieuwe klant toevoegen:" />
+                        <Button layoutX="176.0" layoutY="158.0" mnemonicParsing="false" onAction="#deleteCustomer" text="Verwijder Klant" />
+                        <ComboBox fx:id="customerList2" layoutX="14.0" layoutY="158.0" onAction="#selectCustomer" onInputMethodTextChanged="#selectCustomer" prefWidth="150.0" />
+                        <Label layoutX="14.0" layoutY="129.0" text="Klant verwijderen" />
+                        <Accordion layoutX="361.0" layoutY="158.0" />
+                     </children>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                  </AnchorPane>
+               </content>
+            </Tab>
+            <Tab text="Wallets">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <AnchorPane layoutX="14.0" layoutY="14.0" prefHeight="130.0" prefWidth="262.0" style="-fx-background-color: #F2F2F2;">
+                           <children>
+                              <Button layoutX="178.0" layoutY="14.0" mnemonicParsing="false" onAction="#addWallet" prefHeight="25.0" prefWidth="77.0" text="Voeg toe" />
+                              <TextField fx:id="newWallet" layoutX="18.0" layoutY="91.0" prefHeight="25.0" prefWidth="239.0" promptText="Walletnaam" />
+                              <Label layoutX="22.0" layoutY="13.0" prefHeight="27.0" prefWidth="148.0" text="Wallet aan klant toevoegen:" />
+                              <ComboBox fx:id="customerList3" layoutX="21.0" layoutY="53.0" onAction="#selectCustomer" onInputMethodTextChanged="#selectCustomer" prefHeight="25.0" prefWidth="236.0" />
+                           </children>
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                        </AnchorPane>
+                     </children>
+                  </AnchorPane>
+              </content>
+            </Tab>
+        </tabs>
+      </TabPane>
   </children>
 </VBox>

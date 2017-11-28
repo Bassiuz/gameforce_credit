@@ -11,12 +11,16 @@ import domain.TransactionType;
 import domain.TransactionWallet;
 import java.math.BigDecimal;
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
@@ -38,7 +42,10 @@ public class GameforceCreditController implements Initializable {
     private Label balanceLabel;
 
     @FXML
-    private Label errorLabel;
+    private Label cardCreditLabel;
+    
+     @FXML
+    private Label storeCreditLabel;
 
     @FXML
     private TextField newCustomer;
@@ -62,13 +69,23 @@ public class GameforceCreditController implements Initializable {
     private ComboBox customerList;
 
     @FXML
+    private ComboBox customerList2;
+
+    @FXML
+    private ComboBox customerList3;
+
+    @FXML
     private ListView transactionView;
 
     @FXML
     ComboBox walletList;
+    
+    @FXML
+    ComboBox walletList2;
 
     private Customer selectedCustomer;
     private TransactionWallet selectedWallet;
+    private TransactionWallet transactionWallet;
 
     @FXML
     private void handleButtonAction(ActionEvent event) {
@@ -76,8 +93,16 @@ public class GameforceCreditController implements Initializable {
 
     @FXML
     private void selectCustomer(ActionEvent event) {
-        selectedCustomer = CustomerManager.getCustomerWithName((String) customerList.getSelectionModel().getSelectedItem());
+        if (event != null) {
+            selectedCustomer = CustomerManager.getCustomerWithName((String) ((ComboBox) event.getSource()).getSelectionModel().getSelectedItem());
+
+        } else {
+            selectedCustomer = CustomerManager.getCustomerWithName((String) customerList.getSelectionModel().getSelectedItem());
+
+        }
         initTransactionWalletBox(selectedCustomer);
+        cardCreditLabel.setText(MoneyFormatter.formatMoney(selectedCustomer.getWallets().get(0).getBalance()));
+        storeCreditLabel.setText(MoneyFormatter.formatMoney(selectedCustomer.getWallets().get(1).getBalance()));
     }
 
     @FXML
@@ -87,6 +112,13 @@ public class GameforceCreditController implements Initializable {
             setBalance(selectedWallet);
             transactionView.setItems(selectedWallet.getTransactionOverview());
         }
+
+    }
+    
+     @FXML
+    private void selectTransactionWallet(ActionEvent event) {
+        transactionWallet = selectedCustomer.getWalletWithName((String) walletList2.getSelectionModel().getSelectedItem());
+        
 
     }
 
@@ -104,33 +136,54 @@ public class GameforceCreditController implements Initializable {
 
     @FXML
     private void addTransaction(ActionEvent event) {
+        doTransaction(false);
+    }
+
+    @FXML
+    private void removeTransaction(ActionEvent event) {
+        doTransaction(true);
+    }
+
+    private void doTransaction(boolean negative) {
         if (newTransactionAmount.getText() == null || newTransactionAmount.getText().length() < 1) {
             setErrorMessage("No Amount entered");
         } else if (isTransactionType((String) newTransactionType.getSelectionModel().getSelectedItem())) {
-            if (newTransactionType.getSelectionModel().getSelectedItem() == TransactionType.CUSTOM) {
-                if (newTransactionComment.getText().equals("null")) {
+            if (newTransactionType.getSelectionModel().getSelectedItem().equals(TransactionType.CUSTOM.toString())) {
+                if (newTransactionComment.getText() == null
+                        || newTransactionComment.getText().equals("null")
+                        || newTransactionComment.getText().length() < 1) {
                     setErrorMessage("No comment given");
                     return;
                 } else {
-                    String amount = newTransactionAmount.getText().replace(",", ".");
+                    String amount = newTransactionAmount.getText().replace(",", ".").replace("-", "");
+                    if (negative) {
+                        amount = "-" + amount;
+                    }
                     Double amountDouble = Double.parseDouble(amount);
-                    selectedWallet.addTransaction(
+                    transactionWallet.addTransaction(
                             new Transaction(new BigDecimal(amountDouble),
                                     newTransactionComment.getText()));
+                    newTransactionAmount.setText("");
+                    newTransactionComment.setText("");
                 }
             } else {
-                String amount = newTransactionAmount.getText().replace(",", ".");
+                String amount = newTransactionAmount.getText().replace(",", ".").replace("-", "");
+                if (negative) {
+                    amount = "-" + amount;
+                }
                 Double amountDouble = Double.parseDouble(amount);
-                selectedWallet.addTransaction(
+
+                transactionWallet.addTransaction(
                         new Transaction(new BigDecimal(amountDouble),
                                 getTransactionType((String) newTransactionType.getSelectionModel().getSelectedItem())));
+                                    newTransactionAmount.setText("");
+
             }
             selectWallet(null);
             CustomerManager.saveCustomers();
         } else {
             setErrorMessage("No Transaction Type Selected");
         }
-
     }
 
     private boolean isTransactionType(String input) {
@@ -155,17 +208,29 @@ public class GameforceCreditController implements Initializable {
 
     @FXML
     private void addCustomer(ActionEvent event) {
-        CustomerManager.addCustomer(new Customer(newCustomer.getText(), "", newCustomerWallet.getText()));
+        CustomerManager.addCustomer(new Customer(newCustomer.getText(), ""));
         CustomerManager.saveCustomers();
         initCustomerBox();
     }
 
     @FXML
     private void deleteCustomer(ActionEvent event) {
-        String message = CustomerManager.deleteCustomer(selectedCustomer);
-        CustomerManager.saveCustomers();
-        initCustomerBox();
-        setErrorMessage(message);
+
+        Alert alert = new Alert(AlertType.CONFIRMATION);
+        alert.setTitle("Klant verwijderen");
+        alert.setHeaderText("Je bent een klant aan het verwijderen");
+        alert.setContentText("Weet je zeker dat je " + selectedCustomer.getName() + " wilt verwijderen?");
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ButtonType.OK) {
+            String message = CustomerManager.deleteCustomer(selectedCustomer);
+            CustomerManager.saveCustomers();
+            initCustomerBox();
+            setErrorMessage(message);
+        } else {
+            // ... user chose CANCEL or closed the dialog
+        }
+
     }
 
     /**
@@ -177,23 +242,30 @@ public class GameforceCreditController implements Initializable {
         initTransactionTypeBox();
     }
 
-    private void clearError() {
-        errorLabel.setText("");
-    }
 
     private void setErrorMessage(String message) {
-        errorLabel.setText(message);
+        Alert alert = new Alert(AlertType.WARNING);
+        alert.setTitle("Er is iets fout gegaan");
+        alert.setHeaderText("Er is iets fout gegaan");
+        alert.setContentText(message);
+
+        alert.showAndWait();
     }
 
-    private void initTransactionWalletBox(Customer customer) {
+    
+     private void initTransactionWalletBox(Customer customer) {
         walletList.setItems(customer.getWalletNames());
+        walletList2.setItems(customer.getWalletNames());
         walletList.getSelectionModel().selectFirst(); //select the first element
+        walletList2.getSelectionModel().selectFirst(); //select the first element
         selectWallet(null);
     }
 
     private void initCustomerBox() {
         if (CustomerManager.getCustomerNames() != null && CustomerManager.getCustomerNames().size() > 0) {
             customerList.setItems(CustomerManager.getCustomerNames());
+            customerList2.setItems(CustomerManager.getCustomerNames());
+            customerList3.setItems(CustomerManager.getCustomerNames());
             new ComboBoxAutoComplete<String>(customerList);
             customerList.getSelectionModel().selectFirst(); //select the first element
             selectCustomer(null);
