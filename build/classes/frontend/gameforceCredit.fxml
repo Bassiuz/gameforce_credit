@@ -20,23 +20,22 @@
                         <ComboBox fx:id="customerList" layoutX="62.0" layoutY="8.0" onAction="#selectCustomer" onInputMethodTextChanged="#selectCustomer" prefWidth="150.0" />
                         <Label layoutX="14.0" layoutY="40.0" text="Wallet:" />
                         <ComboBox fx:id="walletList" layoutX="62.0" layoutY="36.0" onAction="#selectWallet" prefWidth="150.0" />
-                        <AnchorPane layoutX="363.0" layoutY="14.0" prefHeight="341.0" prefWidth="243.0" style="-fx-background-color: #F2F2F2;">
+                        <AnchorPane layoutX="363.0" layoutY="89.0" prefHeight="266.0" prefWidth="243.0" style="-fx-background-color: #F2F2F2;">
                            <children>
-                              <TextField fx:id="newTransactionAmount" layoutX="23.0" layoutY="35.0" promptText="Bedrag" />
+                              <TextField fx:id="newTransactionAmount" layoutX="23.0" layoutY="45.0" promptText="Bedrag" />
                               <Label layoutX="24.0" layoutY="11.0" prefHeight="27.0" prefWidth="148.0" text="Transactie aanmaken" />
-                              <ComboBox fx:id="newTransactionType" layoutX="23.0" layoutY="91.0" prefWidth="150.0" promptText="Transactiesoort" />
-                              <TextArea fx:id="newTransactionComment" layoutX="24.0" layoutY="126.0" prefHeight="204.0" prefWidth="196.0" promptText="Custom Message" />
-                              <Button graphicTextGap="0.0" layoutX="178.0" layoutY="24.0" mnemonicParsing="false" onAction="#addTransaction" prefHeight="41.0" prefWidth="41.0" text="+" textFill="#11ff00">
+                              <ComboBox fx:id="newTransactionType" layoutX="23.0" layoutY="80.0" prefWidth="150.0" promptText="Transactiesoort" />
+                              <TextArea fx:id="newTransactionComment" layoutX="24.0" layoutY="126.0" prefHeight="130.0" prefWidth="196.0" promptText="Custom Message" />
+                              <Button graphicTextGap="0.0" layoutX="178.0" layoutY="37.0" mnemonicParsing="false" onAction="#addTransaction" prefHeight="41.0" prefWidth="41.0" text="+" textFill="#11ff00">
                                  <font>
                                     <Font name="System Bold" size="18.0" />
                                  </font>
                               </Button>
-                              <Button graphicTextGap="0.0" layoutX="178.0" layoutY="70.0" mnemonicParsing="false" onAction="#removeTransaction" prefHeight="41.0" prefWidth="41.0" text="-" textFill="RED">
+                              <Button graphicTextGap="0.0" layoutX="178.0" layoutY="80.0" mnemonicParsing="false" onAction="#removeTransaction" prefHeight="41.0" prefWidth="41.0" text="-" textFill="RED">
                                  <font>
                                     <Font name="System Bold" size="18.0" />
                                  </font>
                               </Button>
-                              <ComboBox fx:id="walletList2" layoutX="23.0" layoutY="63.0" onAction="#selectTransactionWallet" prefWidth="150.0" promptText="Wallet" />
                            </children>
                            <opaqueInsets>
                               <Insets />
@@ -48,12 +47,7 @@
                               <ListView fx:id="transactionView" prefHeight="223.0" prefWidth="332.0" />
                            </content>
                         </TitledPane>
-                        <Label layoutX="12.0" layoutY="68.0" text="Walletbalance:" />
-                        <Label fx:id="balanceLabel" layoutX="102.0" layoutY="68.0" />
-                        <Label layoutX="217.0" layoutY="12.0" text="Card Credit:" />
-                        <Label layoutX="218.0" layoutY="32.0" text="Store Credit:" />
-                        <Label fx:id="cardCreditLabel" layoutX="289.0" layoutY="12.0" />
-                        <Label fx:id="storeCreditLabel" layoutX="289.0" layoutY="32.0" />
+                        <ListView fx:id="walletListView" layoutX="243.0" layoutY="11.0" prefHeight="68.0" prefWidth="363.0" />
                      </children>
                   </AnchorPane>
                </content>

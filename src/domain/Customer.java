@@ -1,10 +1,13 @@
 package domain;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import static managers.CustomerManager.loadCustomers;
+import utils.MoneyFormatter;
 
 public class Customer {
 
@@ -75,5 +78,16 @@ public class Customer {
 
     public void setWallets(List<TransactionWallet> wallets) {
         this.wallets = wallets;
+    }
+
+    public ObservableList getWalletOverview() {
+         ObservableList<String> result = FXCollections.observableArrayList();
+
+        for (TransactionWallet wallet : getWallets()) {
+
+           result.add(wallet.getName() + " - " + MoneyFormatter.formatMoney(wallet.getBalance()));
+        }
+        Collections.reverse(result);
+        return result;
     }
 }

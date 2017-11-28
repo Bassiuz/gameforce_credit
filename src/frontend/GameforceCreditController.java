@@ -80,12 +80,12 @@ public class GameforceCreditController implements Initializable {
     @FXML
     ComboBox walletList;
     
-    @FXML
-    ComboBox walletList2;
+     @FXML
+    private ListView walletListView;
+    
 
     private Customer selectedCustomer;
     private TransactionWallet selectedWallet;
-    private TransactionWallet transactionWallet;
 
     @FXML
     private void handleButtonAction(ActionEvent event) {
@@ -101,8 +101,7 @@ public class GameforceCreditController implements Initializable {
 
         }
         initTransactionWalletBox(selectedCustomer);
-        cardCreditLabel.setText(MoneyFormatter.formatMoney(selectedCustomer.getWallets().get(0).getBalance()));
-        storeCreditLabel.setText(MoneyFormatter.formatMoney(selectedCustomer.getWallets().get(1).getBalance()));
+       
     }
 
     @FXML
@@ -114,16 +113,10 @@ public class GameforceCreditController implements Initializable {
         }
 
     }
-    
-     @FXML
-    private void selectTransactionWallet(ActionEvent event) {
-        transactionWallet = selectedCustomer.getWalletWithName((String) walletList2.getSelectionModel().getSelectedItem());
-        
 
-    }
 
     private void setBalance(TransactionWallet transactionWallet) {
-        balanceLabel.setText(MoneyFormatter.formatMoney(transactionWallet.getBalance()));
+        initWalletListView();
     }
 
     @FXML
@@ -160,7 +153,7 @@ public class GameforceCreditController implements Initializable {
                         amount = "-" + amount;
                     }
                     Double amountDouble = Double.parseDouble(amount);
-                    transactionWallet.addTransaction(
+                    selectedWallet.addTransaction(
                             new Transaction(new BigDecimal(amountDouble),
                                     newTransactionComment.getText()));
                     newTransactionAmount.setText("");
@@ -173,7 +166,7 @@ public class GameforceCreditController implements Initializable {
                 }
                 Double amountDouble = Double.parseDouble(amount);
 
-                transactionWallet.addTransaction(
+                selectedWallet.addTransaction(
                         new Transaction(new BigDecimal(amountDouble),
                                 getTransactionType((String) newTransactionType.getSelectionModel().getSelectedItem())));
                                     newTransactionAmount.setText("");
@@ -208,9 +201,17 @@ public class GameforceCreditController implements Initializable {
 
     @FXML
     private void addCustomer(ActionEvent event) {
+        if (CustomerManager.getCustomerWithName(newCustomer.getText()) == null){
         CustomerManager.addCustomer(new Customer(newCustomer.getText(), ""));
         CustomerManager.saveCustomers();
         initCustomerBox();
+        setInfoMessage(newCustomer.getText() + " is toegevoegd");
+        newCustomer.setText("");
+        }
+        else
+        {
+            setErrorMessage(newCustomer.getText() + " bestaat al!");
+        }
     }
 
     @FXML
@@ -226,7 +227,7 @@ public class GameforceCreditController implements Initializable {
             String message = CustomerManager.deleteCustomer(selectedCustomer);
             CustomerManager.saveCustomers();
             initCustomerBox();
-            setErrorMessage(message);
+            setInfoMessage(message);
         } else {
             // ... user chose CANCEL or closed the dialog
         }
@@ -251,15 +252,31 @@ public class GameforceCreditController implements Initializable {
 
         alert.showAndWait();
     }
+    
+       private void setInfoMessage(String message) {
+        Alert alert = new Alert(AlertType.INFORMATION);
+        alert.setTitle("Er is iets gebeurd");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+
+        alert.showAndWait();
+    }
 
     
      private void initTransactionWalletBox(Customer customer) {
         walletList.setItems(customer.getWalletNames());
-        walletList2.setItems(customer.getWalletNames());
-        walletList.getSelectionModel().selectFirst(); //select the first element
-        walletList2.getSelectionModel().selectFirst(); //select the first element
+        walletList.getSelectionModel().selectFirst(); //select the first element        
         selectWallet(null);
+        
+        //init walletlistview
+        initWalletListView();
     }
+    
+     private void initWalletListView()
+     {
+                     walletListView.setItems(selectedCustomer.getWalletOverview());
+
+     }
 
     private void initCustomerBox() {
         if (CustomerManager.getCustomerNames() != null && CustomerManager.getCustomerNames().size() > 0) {
