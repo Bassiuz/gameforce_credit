@@ -121,10 +121,24 @@ public class GameforceCreditController implements Initializable {
 
     @FXML
     private void addWallet(ActionEvent event) {
-        selectedCustomer.addWallet(newWallet.getText());
+        
+        Alert alert = new Alert(AlertType.CONFIRMATION);
+        alert.setTitle("Wallet toevoegen");
+        alert.setHeaderText("Je bent een wallet aan het toevoegen");
+        alert.setContentText("Weet je zeker dat je " + selectedCustomer.getName() + " een extra wallet wil geven?");
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ButtonType.OK) {
+              selectedCustomer.addWallet(newWallet.getText());
         selectCustomer(null);
         CustomerManager.saveCustomers();
         initTransactionWalletBox(selectedCustomer);
+            setInfoMessage("Wallet toegevoegd");
+        } else {
+            // ... user chose CANCEL or closed the dialog
+        }
+        
+    
     }
 
     @FXML
