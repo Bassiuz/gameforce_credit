@@ -53,16 +53,14 @@ public class TransactionWallet {
         ObservableList<String> result = FXCollections.observableArrayList();
 
         for (Transaction transaction : transactions) {
-
             String formattedDate = new SimpleDateFormat("dd-MM-yyyy").format(transaction.getDateOfTransaction());
-
-            if (transaction.getTransactionType() == TransactionType.CUSTOM) {
-                result.add(MoneyFormatter.formatMoney(transaction.getAmount()) + " - " + formattedDate + " - " + transaction.getAdditionalMessage());
-            } else {
-                result.add(MoneyFormatter.formatMoney(transaction.getAmount()) + " - " + formattedDate + " - " + transaction.getTransactionType());
-            }
+            result.add(MoneyFormatter.formatMoney(transaction.getAmount()) + " - " + formattedDate + " - " + transaction.getTransactionType() + " - " + transaction.getAdditionalMessage());  
         }
         Collections.reverse(result);
         return result;
+    }
+
+    public void removeTransaction(int transaction) {
+        transactions.remove(transaction);
     }
 }

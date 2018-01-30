@@ -137,4 +137,14 @@ public class CustomerManager {
             return customer.getName() + " has been deleted";
         }
     }
+
+    public static String editCustomerName(Customer selectedCustomer, String text) {
+        if (getCustomerWithName(text) != null)
+        {
+            return "Naam is al in gebruik";
+        }
+        selectedCustomer.setName(text);
+        saveCustomers();
+        return "De naam van " + text + "is gewijzigd";
+    }
 }

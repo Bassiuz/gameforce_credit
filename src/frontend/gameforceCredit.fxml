@@ -44,7 +44,7 @@
                         <Accordion layoutX="77.0" layoutY="148.0" />
                         <TitledPane expanded="false" layoutX="14.0" layoutY="90.0" prefHeight="262.0" prefWidth="334.0" text="Transactiegeschiedenis">
                            <content>
-                              <ListView fx:id="transactionView" prefHeight="223.0" prefWidth="332.0" />
+                              <ListView fx:id="transactionView" onMouseClicked="#deleteTransaction" prefHeight="223.0" prefWidth="332.0" />
                            </content>
                         </TitledPane>
                         <ListView fx:id="walletListView" layoutX="243.0" layoutY="11.0" prefHeight="68.0" prefWidth="363.0" />
@@ -63,6 +63,10 @@
                         <ComboBox fx:id="customerList2" layoutX="14.0" layoutY="158.0" onAction="#selectCustomer" onInputMethodTextChanged="#selectCustomer" prefWidth="150.0" />
                         <Label layoutX="14.0" layoutY="129.0" text="Klant verwijderen" />
                         <Accordion layoutX="361.0" layoutY="158.0" />
+                        <Label layoutX="14.0" layoutY="67.0" text="Klantnaam wijzigen" />
+                        <ComboBox fx:id="customerListEditName" layoutX="14.0" layoutY="97.0" onAction="#selectCustomer" onInputMethodTextChanged="#selectCustomer" prefWidth="150.0" />
+                        <Button layoutX="336.0" layoutY="97.0" mnemonicParsing="false" onAction="#editCustomerName" text="Wijzig Klantnaam" />
+                        <TextField fx:id="newCustomerName" layoutX="176.0" layoutY="97.0" promptText="Klantnaam" />
                      </children>
                      <opaqueInsets>
                         <Insets />
