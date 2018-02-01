@@ -157,9 +157,12 @@ public class GameforceCreditController implements Initializable {
         doTransaction(false);
     }
 
+    /** subtract
+     */
     @FXML
     private void removeTransaction(ActionEvent event) {
-        //
+                doTransaction(true);
+
     }
 
     long time1 = 0;
