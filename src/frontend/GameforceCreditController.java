@@ -142,7 +142,6 @@ public class GameforceCreditController implements Initializable {
         Optional<ButtonType> result = alert.showAndWait();
         if (result.get() == ButtonType.OK) {
             selectedCustomer.addWallet(newWallet.getText());
-            selectCustomer(null);
             CustomerManager.saveCustomers();
             initTransactionWalletBox(selectedCustomer);
             setInfoMessage("Wallet toegevoegd");

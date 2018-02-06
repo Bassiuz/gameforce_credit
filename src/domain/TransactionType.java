@@ -1,8 +1,9 @@
 package domain;
 
 public enum TransactionType {
-    BUY,
+    SALE_CARDS,
+    TRADE_IN,
+    SALE_PRODUCTS,
     WINNINGS,
-    TRADEIN,
     CUSTOM
 }

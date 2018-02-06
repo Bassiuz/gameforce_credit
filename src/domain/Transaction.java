@@ -14,7 +14,7 @@ public class Transaction {
     public Transaction(BigDecimal amount, TransactionType transactionType,String additionalMessage) {
         this.amount = amount;
         dateOfTransaction = new Date();
-        this.transactionType = TransactionType.CUSTOM;
+        this.transactionType = transactionType;
         this.additionalMessage = additionalMessage;
     }
 

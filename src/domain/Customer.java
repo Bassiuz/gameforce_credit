@@ -9,7 +9,7 @@ import javafx.collections.ObservableList;
 import static managers.CustomerManager.loadCustomers;
 import utils.MoneyFormatter;
 
-public class Customer {
+public class Customer implements Comparable{
 
     private String name;
     private String extraMessage;
@@ -89,5 +89,10 @@ public class Customer {
         }
         Collections.reverse(result);
         return result;
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        return this.getName().compareTo(((Customer)o).getName());
     }
 }

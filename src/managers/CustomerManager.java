@@ -7,6 +7,7 @@ import utils.CustomerJSONWriter;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -21,6 +22,7 @@ public class CustomerManager {
 
     public static void saveCustomers()
     {
+        Collections.sort(customers);
        CustomerJSONWriter.writeToJSON(customers);
     }
 
