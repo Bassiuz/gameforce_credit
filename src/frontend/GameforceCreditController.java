@@ -150,6 +150,13 @@ public class GameforceCreditController implements Initializable {
         }
 
     }
+    
+     @FXML
+    private void export(ActionEvent event) {
+
+        CustomerManager.createExport();
+        setInfoMessage("Export gedaan");
+    }
 
     @FXML
     private void addTransaction(ActionEvent event) {

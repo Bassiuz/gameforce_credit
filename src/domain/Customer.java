@@ -1,5 +1,6 @@
 package domain;
 
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -89,6 +90,17 @@ public class Customer implements Comparable{
         }
         Collections.reverse(result);
         return result;
+    }
+    
+    public BigDecimal getTotalMoney()
+    {
+        BigDecimal total = new BigDecimal(0);
+        for (TransactionWallet wallet : wallets)
+        {
+            total = total.add(wallet.getBalance());
+        }
+        return total;
+        
     }
 
     @Override
