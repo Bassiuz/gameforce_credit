@@ -12,5 +12,12 @@
             <file>file:/E:/Documents/GameforceCredit/gameforce_credit/src/domain/Customer.java</file>
             <file>file:/E:/Documents/GameforceCredit/gameforce_credit/src/managers/CustomerManager.java</file>
         </group>
+        <group>
+            <file>file:/D:/gameforce_credit/src/frontend/gameforceCredit.fxml</file>
+            <file>file:/D:/gameforce_credit/src/frontend/GameforceCreditController.java</file>
+            <file>file:/D:/gameforce_credit/src/utils/CustomerJSONWriter.java</file>
+            <file>file:/D:/gameforce_credit/src/managers/CustomerManager.java</file>
+            <file>file:/D:/gameforce_credit/src/domain/Customer.java</file>
+        </group>
     </open-files>
 </project-private>

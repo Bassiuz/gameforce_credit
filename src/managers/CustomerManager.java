@@ -152,26 +152,24 @@ public class CustomerManager {
             File file = new File("Gameforce Customer Export.csv");
             pw = new PrintWriter(file);
             StringBuilder sb = new StringBuilder();
-            sb.append("sep=;");
-            sb.append('\n');
             sb.append("Klantnaam");
-            sb.append(';');
+            sb.append(',');
             sb.append("Opmerking");
-            sb.append(';');
+            sb.append(',');
             for(String walletName : walletNames)
             {
                 sb.append(walletName);
-                sb.append(';');
+                sb.append(',');
             }
              sb.append("Totaal");
-            sb.append(';');
+            sb.append(',');
             sb.append('\n');
             for (Customer customer : customers) {
 
                 sb.append(customer.getName());
-                sb.append(';');
+                sb.append(',');
                 sb.append(customer.getExtraMessage());
-                sb.append(';');
+                sb.append(',');
                 int i = 0;
                 while (i < amountOfWallets) {
                     if (customer.getWallets().size() > i) {
@@ -179,11 +177,11 @@ public class CustomerManager {
                     } else {
                         sb.append("");
                     }
-                    sb.append(';');
+                    sb.append(',');
                     i++;
                 }
                  sb.append(formatMoney(customer.getTotalMoney()));
-                sb.append(';');
+                sb.append(',');
                 sb.append('\n');
             }
 
@@ -206,7 +204,7 @@ public class CustomerManager {
         if (fracBd.toPlainString().length() < 4) {
             fracString = "0.0000";
         }
-        return amount.toBigInteger().toString() + "," + fracString.substring(fracString.length() - 4);
+        return amount.toBigInteger().toString() + "." + fracString.substring(fracString.length() - 4);
 
     }
 }
