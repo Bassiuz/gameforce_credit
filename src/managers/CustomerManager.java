@@ -201,10 +201,10 @@ public class CustomerManager {
     public static String formatMoney(BigDecimal amount) {
         BigDecimal fracBd = amount.subtract(new BigDecimal(amount.toBigInteger()));
         String fracString = fracBd.toPlainString();
-        if (fracBd.toPlainString().length() < 4) {
-            fracString = "0.0000";
+        if (fracBd.toPlainString().length() < 2) {
+            fracString = "0.00";
         }
-        return amount.toBigInteger().toString() + "." + fracString.substring(fracString.length() - 4);
+        return amount.toBigInteger().toString() + "." + fracString.substring(fracString.length() - 2);
 
     }
 }
