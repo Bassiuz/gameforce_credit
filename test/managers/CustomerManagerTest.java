@@ -96,7 +96,7 @@ public class CustomerManagerTest {
                 "Harry still has balance on his account!",
                 message);
 
-        TransactionManager.addTransaction(harry, "Winkeltegoed", new Transaction(new BigDecimal(-9.99), TransactionType.BUY));
+        TransactionManager.addTransaction(harry, "Winkeltegoed", new Transaction(new BigDecimal(-9.99), TransactionType.SALE_CARDS));
 
         message = CustomerManager.deleteCustomer(harry);
         assertTrue("Harry has been deleted",

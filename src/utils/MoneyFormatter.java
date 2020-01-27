@@ -23,7 +23,7 @@ public class MoneyFormatter {
             amount = amount.multiply(new BigDecimal(-1));
         }
         BigDecimal fractionalPart = amount.remainder( BigDecimal.ONE ).setScale(2, RoundingMode.HALF_DOWN);
-        BigDecimal whole = amount.subtract(fractionalPart).setScale(0, RoundingMode.HALF_DOWN);
+        BigDecimal whole = amount.subtract(fractionalPart.remainder( BigDecimal.ONE )).setScale(0, RoundingMode.HALF_DOWN);
         
         String result = "€" + whole.toPlainString()+ "," + fractionalPart.toPlainString().substring(2);
         if (useMinus)
